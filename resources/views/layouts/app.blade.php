@@ -86,6 +86,7 @@
         </div>
     </nav>
 
+    <canvas id="cropCanvas" class="d-none"></canvas>
     <main id="app" class="py-4">
         @yield('content')
         <alert ref="alert"/>

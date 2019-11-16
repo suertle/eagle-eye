@@ -2691,6 +2691,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2796,7 +2803,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     return c.id === member.id;
                   });
 
-                  _this3.searchResult[index].hide = true;
+                  _this3.searchResult[index].checked = true;
                 });
 
               case 2:
@@ -3591,14 +3598,12 @@ __webpack_require__.r(__webpack_exports__);
     loadUserImage: function loadUserImage() {
       var _this2 = this;
 
-      var reader = new FileReader();
       var file = this.$refs.userImageInput.files[0];
-      reader.addEventListener('load', function () {
-        _this2.$refs.userImage.src = reader.result;
+      this.cropSquareImage(file, function (dataUrl) {
+        _this2.$refs.userImage.src = dataUrl;
 
         _this2.upload();
-      }, false);
-      if (file) reader.readAsDataURL(file);
+      });
     },
     upload: function upload() {
       var _this3 = this;
@@ -59899,7 +59904,7 @@ var render = function() {
                 _c("div", { staticClass: "card-footer p-2 text-right" }, [
                   _c("div", { staticClass: "float-left" }, [
                     _vm.member.id == 0
-                      ? _c("span", [_vm._v("Guest")])
+                      ? _c("span", [_vm._v("ไม่ใช่สมาชิก")])
                       : _c("span", [
                           _vm._v(
                             _vm._s(_vm.member.first_name) +
@@ -60025,94 +60030,104 @@ var render = function() {
                           "div",
                           { key: member.id, staticClass: "col-6 col-lg-4" },
                           [
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: member.hide == undefined,
-                                    expression: "member.hide == undefined"
-                                  }
-                                ],
-                                staticClass: "card mb-3"
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  { attrs: { href: "/member/" + member.id } },
-                                  [
-                                    _c("img", {
-                                      staticClass: "card-img-top",
-                                      attrs: {
-                                        src: member.profile_image,
-                                        alt: "..."
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "card-body p-3 text-center" },
-                                  [
-                                    _c(
-                                      "h5",
-                                      { staticClass: "card-title mb-1" },
-                                      [_vm._v(_vm._s(member.first_name))]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("p", { staticClass: "card-text" }, [
-                                      _vm._v(_vm._s(member.last_name))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "card mb-3" }, [
+                              _c(
+                                "a",
+                                { attrs: { href: "/member/" + member.id } },
+                                [
+                                  _c("img", {
+                                    staticClass: "card-img-top",
+                                    attrs: {
+                                      src: member.profile_image,
+                                      alt: "..."
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "card-body p-3 text-center" },
+                                [
+                                  _c(
+                                    "h6",
+                                    { staticClass: "card-title mx-n3 mb-2" },
+                                    [
+                                      _c("small", [
+                                        _vm._v(
+                                          _vm._s(member.first_name) +
+                                            " " +
+                                            _vm._s(member.last_name)
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("div", { staticClass: "col-auto" }, [
                                       _c(
-                                        "div",
-                                        { staticClass: "col-lg-8 offset-lg-2" },
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "btn btn-sm btn-outline-secondary",
+                                          attrs: {
+                                            href: "/member/" + member.id
+                                          }
+                                        },
                                         [
-                                          member.expired_date >= _vm.$date
-                                            ? _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "btn btn-sm btn-success w-100",
-                                                  attrs: { type: "button" },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.checkin(member)
-                                                    }
-                                                  }
-                                                },
-                                                [_vm._v("check in")]
-                                              )
-                                            : _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "btn btn-sm btn-danger w-100",
-                                                  attrs: {
-                                                    type: "button",
-                                                    "data-toggle": "modal",
-                                                    "data-target":
-                                                      "#subscribeModal"
-                                                  },
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.selectedMember = member
-                                                    }
-                                                  }
-                                                },
-                                                [_vm._v("ต่ออายุ")]
-                                              )
+                                          _c("i", {
+                                            staticClass: "far fa-edit"
+                                          })
                                         ]
                                       )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col pl-0" }, [
+                                      member.checked == undefined
+                                        ? _c("div", [
+                                            member.expired_date >= _vm.$date
+                                              ? _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-sm btn-success w-100",
+                                                    attrs: { type: "button" },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.checkin(
+                                                          member
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [_vm._v("เช็คอิน")]
+                                                )
+                                              : _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-sm btn-danger w-100",
+                                                    attrs: {
+                                                      type: "button",
+                                                      "data-toggle": "modal",
+                                                      "data-target":
+                                                        "#subscribeModal"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.selectedMember = member
+                                                      }
+                                                    }
+                                                  },
+                                                  [_vm._v("ต่ออายุ")]
+                                                )
+                                          ])
+                                        : _c("div", [_vm._m(2, true)])
                                     ])
-                                  ]
-                                )
-                              ]
-                            )
+                                  ])
+                                ]
+                              )
+                            ])
                           ]
                         )
                       }),
@@ -60126,7 +60141,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("table", { staticClass: "table" }, [
-                  _vm._m(2),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -60189,6 +60204,19 @@ var staticRenderFns = [
         ]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm btn-outline-success w-100",
+        attrs: { disabled: "" }
+      },
+      [_c("i", { staticClass: "fas fa-check" })]
+    )
   },
   function() {
     var _vm = this
@@ -60832,7 +60860,7 @@ var render = function() {
                 _c("div", { staticClass: "card-footer p-2 text-right" }, [
                   _c("div", { staticClass: "float-left" }, [
                     _vm.member.id == 0
-                      ? _c("span", [_vm._v("Guest")])
+                      ? _c("span", [_vm._v("ไม่ใช่สมาชิก")])
                       : _c("span", [
                           _vm._v(
                             _vm._s(_vm.member.first_name) +
@@ -62334,7 +62362,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "h4" }, [
       _c("div", { staticClass: "row text-center" }, [
-        _c("div", { staticClass: "my-4 col-6 col-lg-4" }, [
+        _c("div", { staticClass: "my-4 col-6 col-lg-3" }, [
           _c(
             "a",
             {
@@ -62354,7 +62382,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "my-4 col-6 col-lg-4" }, [
+        _c("div", { staticClass: "my-4 col-6 col-lg-3" }, [
           _c(
             "a",
             {
@@ -62374,7 +62402,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "my-4 col-6 col-lg-4" }, [
+        _c("div", { staticClass: "my-4 col-6 col-lg-3" }, [
           _c(
             "a",
             {
@@ -62394,7 +62422,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "my-4 col-6 col-lg-4" }, [
+        _c("div", { staticClass: "my-4 col-6 col-lg-3" }, [
           _c(
             "a",
             {
@@ -74679,6 +74707,38 @@ Vue.mixin({
       } else {
         return '0';
       }
+    },
+    cropSquareImage: function cropSquareImage(file, callback) {
+      var newSquare = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 600;
+      var reader = new FileReader();
+      reader.addEventListener('load', function () {
+        var image = new Image();
+
+        image.onload = function () {
+          var left = 0;
+          var top = 0;
+          var square = 0;
+
+          if (image.width > image.height) {
+            left = parseInt((image.width - image.height) / 2);
+            square = image.height;
+            newSquare = image.height < newSquare ? image.height : newSquare;
+          } else {
+            top = parseInt((image.height - image.width) / 2);
+            square = image.width;
+            newSquare = image.width < newSquare ? image.width : newSquare;
+          }
+
+          var canvas = document.getElementById('cropCanvas');
+          canvas.height = newSquare;
+          canvas.width = newSquare;
+          canvas.getContext('2d').drawImage(image, left, top, square, square, 0, 0, newSquare, newSquare);
+          callback(canvas.toDataURL('image/jpeg', 0.7));
+        };
+
+        image.src = reader.result;
+      }, false);
+      if (file) reader.readAsDataURL(file);
     }
   }
 });
@@ -76382,8 +76442,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/tommeng/Documents/Git/opium/sin-gym/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/tommeng/Documents/Git/opium/sin-gym/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/tommeng/Documents/Git/opium/eagle-eye/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/tommeng/Documents/Git/opium/eagle-eye/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
