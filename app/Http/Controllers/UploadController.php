@@ -45,7 +45,7 @@ class UploadController extends Controller
             $image = str_replace(' ', '+', $image);
             $data = base64_decode($image);
 
-            $filename = '/images' . $folder . '/' . str_random() . $extention;
+            $filename = '/images' . $folder . '/' . date('ymd') . str_random(5) . $extention;
             $url = Storage::put('/public' . $filename, $data);
 
             return ['success' => true, 'url' => '/storage' . $filename];

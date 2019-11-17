@@ -13,6 +13,6 @@ class Product extends Model
 
     public function supplier()
     {
-        return $this->belongsTo('App\Models\Supplier');
+        return $this->belongsTo('App\Models\Supplier')->withTrashed();
     }
 }

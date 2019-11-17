@@ -24,6 +24,9 @@ class CreateMembersTable extends Migration
             $table->enum('gender', ['', 'ชาย', 'หญิง']);
             $table->string('personal_id');
             $table->text('address');
+            $table->string('emergency_first_name');
+            $table->string('emergency_last_name');
+            $table->string('emergency_phone_number');
             $table->string('profile_image', 200);
             $table->date('expired_date')->nullable()->default(null);
             $table->timestamps();

@@ -10,16 +10,16 @@ class InvoiceItem extends Model
 
     public function member()
     {
-        return $this->belongsTo('App\Models\Member');
+        return $this->belongsTo('App\Models\Member')->withTrashed();
     }
 
     public function invoice()
     {
-        return $this->belongsTo('App\Models\RentList');
+        return $this->belongsTo('App\Models\Invoice');
     }
 
     public function product()
     {
-        return $this->belongsTo('App\Models\product');
+        return $this->belongsTo('App\Models\Product')->withTrashed();
     }
 }

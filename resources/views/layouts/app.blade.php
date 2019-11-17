@@ -28,6 +28,15 @@
                 @else
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('checkin') }}">เช็คอิน</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('rent') }}">ยืมของ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cashier') }}">ขายของ</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                             ข้อมูล
@@ -38,15 +47,6 @@
                             <a class="dropdown-item" href="{{ route('member') }}">สมาชิก</a>
                             <a class="dropdown-item" href="{{ route('member_plan') }}">โปรแกรมสมาชิก</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('checkin') }}">เช็คอิน</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('rent') }}">ยืมของ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cashier') }}">ขายของ</a>
                     </li>
                 </ul>
                 @endguest

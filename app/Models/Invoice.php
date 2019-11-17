@@ -10,7 +10,7 @@ class Invoice extends Model
 
     public function member()
     {
-        return $this->belongsTo('App\Models\Member');
+        return $this->belongsTo('App\Models\Member')->withTrashed();
     }
 
     public function invoice_items()
